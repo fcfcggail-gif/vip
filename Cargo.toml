@@ -12,7 +12,7 @@ debug = true
 incremental = true
 
 [profile.release]
-opt-level = "z"
+opt-level = "s"
 lto = true
 codegen-units = 1
 panic = "abort"
@@ -20,10 +20,7 @@ strip = true
 
 [profile.release-router]
 inherits = "release"
-opt-level = "z"
-lto = "fat"
 codegen-units = 1
-panic = "abort"
 strip = "symbols"
 debug = false
 debug-assertions = false
