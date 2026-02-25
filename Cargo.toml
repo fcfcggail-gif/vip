@@ -1,0 +1,169 @@
+[package]
+name = "network-ghost-v5"
+version = "5.0.0"
+edition = "2021"
+authors = ["Network Ghost Team"]
+description = "Zero-Knowledge Phantom Network Tunnel - Anti-AI DPI System"
+license = "MIT"
+
+[profile.dev]
+opt-level = 0
+debug = true
+incremental = true
+
+[profile.release]
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
+strip = true
+
+[profile.release-router]
+inherits = "release"
+opt-level = "z"
+lto = "fat"
+codegen-units = 1
+panic = "abort"
+strip = "symbols"
+debug = false
+debug-assertions = false
+overflow-checks = false
+rpath = false
+
+[lib]
+name = "network_ghost_v5"
+path = "src/lib.rs"
+
+[[bin]]
+name = "network-ghost"
+path = "src/main.rs"
+
+[[bin]]
+name = "daemon"
+path = "src/bin/daemon.rs"
+
+[[bin]]
+name = "scanner"
+path = "src/bin/scanner.rs"
+
+[[bin]]
+name = "proxy-checker"
+path = "src/bin/proxy_checker.rs"
+
+[[bin]]
+name = "auto-updater"
+path = "src/bin/auto_updater.rs"
+
+# ════════════════════════════════════════════════════════════════════════
+# 🚀 Smart & Advanced Features (Optimized for Ghost v5.0)
+# ════════════════════════════════════════════════════════════════════════
+[features]
+# حالت پیش‌فرض: تمام موتورها روشن
+default = ["full"]
+
+# قابلیت کامل: فعال‌سازی همزمان بهینه‌سازی روتر و سیستم ضد بازرسی (DPI)
+full = ["router-optimized", "extreme-padding", "anti-ai-dpi"]
+
+# 🎯 بهینه‌سازی سخت‌افزاری مخصوص IPQ40xx (Google WiFi)
+# فعال‌سازی هماهنگ با کرنل لینوکس برای کاهش بار پردازنده
+router-optimized = []
+
+# 🛡️ سیستم پیشرفته ضد هوش مصنوعی (Anti-AI DPI)
+# برای دور زدن فیلترینگ‌های مبتنی بر یادگیری ماشین
+anti-ai-dpi = []
+
+# 📦 فشرده‌سازی و پدینگ فوق سنگین پکت‌ها
+extreme-padding = []
+
+# 🔍 دیباگ تخصصی لایه‌های شبکه (فقط برای تست)
+network-tracing = []
+
+[dependencies]
+# Async Runtime
+tokio = { version = "1.35", features = ["full", "net", "time", "sync", "io-util", "rt-multi-thread", "process"] }
+async-trait = "0.1"
+futures = "0.3"
+
+# Networking
+hyper = { version = "1.1", features = ["full"] }
+hyper-util = { version = "0.1", features = ["full"] }
+http-body-util = "0.1"
+tower = "0.4"
+tokio-stream = "0.1"
+
+# TLS & Crypto
+rustls = { version = "0.23", features = ["ring", "std"] }
+rustls-pemfile = "2.0"
+webpki-roots = "0.26"
+ring = "0.17"
+x25519-dalek = { version = "2.0", features = ["static_secrets"] }
+chacha20poly1305 = "0.10"
+aead = "0.5"
+sha2 = "0.10"
+sha3 = "0.10"
+blake3 = "1.5"
+hkdf = "0.12"
+rand = "0.8"
+rand_chacha = "0.3"
+
+# QUIC & UDP
+quinn = { version = "0.10", features = ["ring"] }
+h3 = "0.0.4"
+h3-quinn = "0.0.5"
+
+# Encoding & Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bincode = "1.3"
+base64 = "0.21"
+hex = "0.4"
+url = "2.5"
+
+# Configuration
+config = "0.14"
+toml = "0.8"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+
+# Error Handling
+thiserror = "1.0"
+anyhow = "1.0"
+
+# System
+libc = "0.2"
+nix = { version = "0.27", features = ["net", "socket", "uio", "ioctl", "signal", "mount"] }
+socket2 = { version = "0.5", features = ["all"] }
+
+# Time & UUID
+chrono = { version = "0.4", features = ["serde", "clock", "std"] }
+uuid = { version = "1.6", features = ["v4", "v5", "serde"] }
+
+# Memory-efficient collections
+smallvec = { version = "1.11", features = ["serde", "write"] }
+indexmap = { version = "2.1", features = ["serde"] }
+dashmap = "5.5"
+
+# DNS
+hickory-client = "0.24"
+hickory-proto = "0.24"
+
+# Metrics
+metrics = "0.21"
+
+# HTTP Client for proxy checker
+reqwest = { version = "0.11", features = ["json", "rustls-tls", "socks"], default-features = false }
+
+# CLI argument parsing
+clap = { version = "4.4", features = ["derive"] }
+
+# Terminal colors
+colored = "2.1"
+
+# Timezone support for Tehran
+chrono-tz = "0.8"
+sha1 = "0.10.6"
+
+[dev-dependencies]
+tokio-test = "0.4"

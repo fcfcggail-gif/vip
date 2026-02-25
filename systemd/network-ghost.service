@@ -1,0 +1,54 @@
+[Unit]
+Description=Network Ghost v5.0 — Anti-AI DPI Tunnel Auto-Updater
+Documentation=https://github.com/network-ghost/v5
+After=network-online.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/opt/network-ghost
+ExecStart=/opt/network-ghost/auto-updater
+TimeoutStartSec=660s
+
+# ── Kernel Sandboxing ──────────────────────────────────────────
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/opt/network-ghost/sub/
+ReadWritePaths=/opt/network-ghost/logs/
+ReadWritePaths=/opt/network-ghost/cache/
+ReadWritePaths=/etc/hiddify-core/
+ReadWritePaths=/tmp/
+ReadWritePaths=/etc/dae/
+NoNewPrivileges=yes
+PrivateTmp=yes
+PrivateUsers=no
+ProtectHostname=yes
+ProtectClock=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+SystemCallFilter=@system-service @network-io @file-system
+SystemCallErrorNumber=EPERM
+
+# ── Resource Limits ────────────────────────────────────────────
+CPUQuota=15%
+MemoryMax=80M
+Nice=19
+IOSchedulingClass=idle
+IOSchedulingPriority=7
+LimitNOFILE=65536
+
+# ── Logging ────────────────────────────────────────────────────
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=network-ghost
+
+# ── Restart Policy ─────────────────────────────────────────────
+Restart=on-failure
+RestartSec=30s
+StartLimitBurst=3
+StartLimitInterval=300s
+
+[Install]
+WantedBy=multi-user.target

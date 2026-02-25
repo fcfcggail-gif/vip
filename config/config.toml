@@ -1,0 +1,105 @@
+# Network Ghost v5.0 - Ultimate Hybrid Configuration
+# Optimized for: Irancell, MCI, Shatel Mobile, Google WiFi (AC-1304)
+
+[general]
+memory_limit_mb = 120
+auto_save_interval = 300
+enable_watchdog = true
+
+[proxy]
+server = ""
+port = 443
+protocol = "reality"
+cdn_type = "cloudflare"
+sni = "ebanking.bmi.ir"
+uuid = ""
+utls_fingerprint = "chrome"
+max_latency_ms = 250
+auto_switch = true
+alternative_ports = [443, 2053, 2083, 2087, 2096, 8443]
+
+[transport]
+protocol = "shadowtls-v3"
+padding_min = 512
+padding_max = 1500
+mux = true
+concurrency = 16
+
+[spoofing]
+sni = "www.telewebion.com"
+# sni = "download.irancell.ir"
+scramble_hello = true
+alpn = ["h2", "http/1.1"]
+
+[scanner]
+max_ips = 150
+connect_timeout_ms = 2000
+tls_timeout_ms = 4000
+concurrency = 15
+enable_anti_ai = true
+scan_interval = 300
+
+[anti_ai]
+enabled = true
+mode = "adaptive"
+enable_padding = true
+enable_timing = true
+enable_decoy = true
+
+[dns]
+servers = ["1.1.1.1:53", "8.8.8.8:53", "9.9.9.9:53"]
+enable_doh = true
+enable_doq = true
+cache_size = 2048
+
+[zapret]
+enabled = true
+strategy = "auto"
+fragment_size_https = 40
+enable_fake_packets = true
+fake_ttl = 8
+enable_disorder = true
+http_bypass = true
+https_bypass = true
+quic_bypass = true
+target_ports = [80, 443]
+use_nfqueue = true
+nfqueue_num = 100
+
+[goodbyedpi]
+enabled = true
+mode = "iranian"
+http_fragment = true
+http_fragment_size = 2
+http_mix_host_case = true
+https_fragment = true
+https_fragment_size = 40
+dns_redirect = true
+dns_server = "1.1.1.1"
+
+[network]
+tcp_fast_open = true
+udp_over_tcp = "auto"
+send_window = 8388608
+recv_window = 8388608
+
+[warp]
+enabled = false
+account_type = "free"
+mtu = 1280
+fake_packets = true
+
+[tproxy]
+listen_port = 7892
+dns_port = 7874
+mark = 1
+table_id = 100
+enable_ipv6 = true
+bypass_private = true
+bypass_iran_geoip = true
+
+[hardware]
+enable_hw_offload = true
+enable_bbr = true
+enable_ebpf_jit = true
+enable_core_affinity = true

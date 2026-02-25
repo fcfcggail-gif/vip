@@ -1,0 +1,19 @@
+[Unit]
+Description=Network Ghost v5.0 — Temporal Jitter Auto-Update Timer
+Documentation=https://github.com/network-ghost/v5
+Requires=network-ghost.service
+
+[Timer]
+# اجرا ۵ دقیقه پس از بوت
+OnBootSec=5min
+# هر ۶ ساعت یک‌بار
+OnUnitActiveSec=6h
+# ±۲۰ دقیقه Temporal Jitter — جلوگیری از Cron Fingerprinting توسط DPI
+RandomizedDelaySec=20m
+# اجرای جبرانی پس از ریبوت
+Persistent=true
+# دقت زمان‌بندی
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target
